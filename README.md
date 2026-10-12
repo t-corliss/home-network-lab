@@ -1,6 +1,4 @@
-
-
-\#Home Network Lab
+\# Home Network Lab
 
 
 
@@ -8,7 +6,7 @@
 
 
 
-This repository documents the design, configuration, validation, recovery procedures, and operational lessons for my segmented home network and personal lab environment. 
+This repository documents the design, configuration, validation, recovery procedures, and operational lessons for my segmented home network and personal lab environment.
 
 
 
@@ -16,7 +14,7 @@ The network uses VLAN-based Layer 2 segmentation with pfsense providing Layer 3 
 
 
 
-\## Design Goals 
+\## Design Goals
 
 
 
@@ -88,35 +86,35 @@ Detailed addressing and security policy are maintained in the documentation rath
 
 Internet
 
-&#x20;  |
+   |
 
 pfSense
 
-&#x20;  |
+   |
 
-&#x20;  | VLAN trunk
+   | VLAN trunk
 
-&#x20;  |
+   |
 
 Netgear Managed Switch
 
-&#x20;  |
+   |
 
-&#x20;  +-- Management devices
+   +-- Management devices
 
-&#x20;  +-- Trusted clients
+   +-- Trusted clients
 
-&#x20;  +-- Windows Server
+   +-- Windows Server
 
-&#x20;  +-- Recovery ports
+   +-- Recovery ports
 
-&#x20;  |
+   |
 
-&#x20;  +-- UniFi Access Point
+   +-- UniFi Access Point
 
-&#x20;         |
+          |
 
-&#x20;         +-- Trusted Wi-Fi
+          +-- Trusted Wi-Fi
 
-&#x20;         +-- Guest Wi-Fi
+          +-- Guest Wi-Fi
 
