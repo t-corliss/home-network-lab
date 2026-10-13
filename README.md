@@ -1,122 +1,88 @@
+# Home Network Lab
 
+## Overview
 
-\#Home Network Lab
+This repository documents the design, configuration, validation, recovery procedures, and operational lessons for my segmented home network and personal lab environment.
 
+The network uses VLAN-based Layer 2 segmentation with pfSense providing Layer 3 routing and firewall policy between security zones.
 
+## Design Goals
 
-\## Overview
+- Separate management, trusted clients, servers, guests, and recovery access.
+- Apply least-privilege policy between network segments.
+- Maintain reliable administrative and emergency recovery paths.
+- Document the environment well enough to support troubleshooting and future changes.
+- Use repeatable validation and change-control procedures.
 
-
-
-This repository documents the design, configuration, validation, recovery procedures, and operational lessons for my segmented home network and personal lab environment. 
-
-
-
-The network uses VLAN-based Layer 2 segmentation with pfsense providing Layer 3 routing and firewall policy between security zones.
-
-
-
-\## Design Goals 
-
-
-
-
-
-\- Separate management, trusted clients, servers, guests, and recovery access.
-
-\- Apply least-privilege policy between network segments.
-
-\- Maintain reliable administrative and emergency recovery paths.
-
-\- Document the environment well enough to support troubleshooting and future changes.
-
-\- Use repeatable validation and change-control procedures.
-
-
-
-\## Hardware
-
-
+## Hardware
 
 The current environment includes:
 
+- Netgate SG-1100 running pfSense
+- Netgear JGS516PE managed switch
+- UniFi Cloud Key Plus
+- UniFi AC Mesh wireless access point
+- Windows Server 2022
+- Administrative client systems
 
-
-\- Netgate SG-1100 running pfSense
-
-\- Netgear JGS516PE managed switch
-
-\- UniFi Cloud Key Plus
-
-\- UniFi AC Mesh wireless access point
-
-\- Windows Server 2022
-
-\- Administrative client systems
-
-
-
-\## Network Zones
-
-
+## Network Zones
 
 | VLAN | Name | Purpose |
-
 |---|---|---|
-
 | 1 | Legacy / Recovery | Break-glass and recovery access |
-
 | 10 | Management | Infrastructure administration |
-
 | 20 | Trusted | Trusted client devices |
-
 | 30 | Servers | Server workloads |
-
 | 40 | Guest | Isolated guest wireless access |
 
+## High-Level Topology
 
-
-Detailed addressing and security policy are maintained in the documentation rather than duplicated here.
-
-
-
-\## High-Level Topology
-
-
-
-
-
+```text
 Internet
-
-&#x20;  |
-
+   |
 pfSense
-
-&#x20;  |
-
-&#x20;  | VLAN trunk
-
-&#x20;  |
-
+   |
+   | VLAN trunk
+   |
 Netgear Managed Switch
+   |
+   +-- Management devices
+   +-- Trusted clients
+   +-- Windows Server
+   +-- Recovery ports
+   |
+   +-- UniFi Access Point
+          |
+          +-- Trusted Wi-Fi
+          +-- Guest Wi-Fi
+```
 
-&#x20;  |
+VLANs provide Layer 2 segmentation. pfSense enforces routed Layer 3 policy between VLANs. Traffic between devices on the same VLAN may remain entirely at Layer 2 and therefore may not traverse the firewall.
 
-&#x20;  +-- Management devices
+## Documentation
 
-&#x20;  +-- Trusted clients
+Current and planned documentation includes:
 
-&#x20;  +-- Windows Server
+- [Network Architecture](docs/architecture.md)
+- VLAN and addressing plan
+- Switching and VLAN transport
+- Firewall policy
+- Wireless and guest access
+- Recovery procedures
+- Validation procedures
+- Troubleshooting history
+- Procedure for adding future VLANs
 
-&#x20;  +-- Recovery ports
+# Important Recovery Notes
 
-&#x20;  |
+The network includes dedicated recovery paths for management access.
 
-&#x20;  +-- UniFi Access Point
+Recovery interfaces and ports should be preserved during configuration changes until replacement access has been tested successfully.
 
-&#x20;         |
+The Legacy / Recovery VLAN is intentionally more privileged than normal production segments and should be treated as emergency-use infrastructure.
 
-&#x20;         +-- Trusted Wi-Fi
+## Repository Scope
 
-&#x20;         +-- Guest Wi-Fi
+This repository contains documentation, sanitized examples, diagrams, and operational history for the lab.
 
+Live configuration backups, credentials, private keys, passwords, tokens, and other sensitive material are intentionally excluded.
