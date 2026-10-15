@@ -61,17 +61,15 @@ VLANs provide Layer 2 segmentation. pfSense enforces routed Layer 3 policy betwe
 
 ## Documentation
 
-Current and planned documentation includes:
-
 - [Network Architecture](docs/architecture.md)
-- VLAN and addressing plan
-- Switching and VLAN transport
-- Firewall policy
-- Wireless and guest access
-- Recovery procedures
-- Validation procedures
-- Troubleshooting history
-- Procedure for adding future VLANs
+- [VLAN and Addressing Plan](docs/vlan-addressing.md)
+- [Switching and VLAN Transport](docs/switching.md)
+- [Firewall Policy](docs/firewall-policy.md)
+- [Wireless](docs/wireless.md)
+- [Recovery and Emergency Access](docs/recovery.md)
+- [Network Validation Checklist](docs/validation.md)
+- [Troubleshooting Lessons](docs/troubleshooting.md)
+- [Adding a New VLAN](docs/adding-a-vlan.md)
 
 # Important Recovery Notes
 
