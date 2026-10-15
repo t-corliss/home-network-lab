@@ -111,9 +111,9 @@ Current known addresses include:
 | pfSense Servers gateway | 30 | `10.10.30.1` | Configured |
 | pfSense Guest gateway | 40 | `10.10.40.1` | Configured |
 | Windows Server 2022 | 30 | `10.10.30.11` | Known / stable |
-| UniFi Cloud Key Plus | 10 | `10.10.10.101` | Observed DHCP address |
-| UniFi AC Mesh AP | 10 | `10.10.10.105` | Observed DHCP address |
-| Netgear JGS516PE | 10 | `10.10.10.106` | Observed DHCP address |
+| UniFi Cloud Key Plus | 10 | `10.10.10.20` | Configured |
+| UniFi AC Mesh AP | 10 | `10.10.10.21` | Configured |
+| Netgear JGS516PE | 10 | `10.10.10.22` | Configured |
 
 ## Addressing Conventions
 
