@@ -97,7 +97,7 @@ Netgear JGS516PE
    +-- Management / recovery ports
    +-- Other wired clients
 ```
-   ## Logical Topology
+### Logical Topology
 
 The network is divided into separate VLANs based on device role and trust level.
 
@@ -116,21 +116,25 @@ Traffic that needs to move between VLANs is routed through pfSense, where firewa
 A simplified logical topology is shown below:
 
 ```text
-                    Internet
-                       |
-                    pfSense
-                       |
-        +--------------+--------------+
-        |              |              |
-     VLAN 10         VLAN 20        VLAN 30
-   Management        Trusted        Servers
-        |
-        +-----------------------------+
-                       |
-                    VLAN 40
-                     Guest
+                         Internet
+                            |
+                         pfSense
+                            |
+        +-------------------+-------------------+
+        |         |         |         |         |
+     VLAN 1     VLAN 10   VLAN 20    VLAN 30   VLAN 40
+     Legacy    Management Trusted    Servers    Guest
+    /Recovery
 ```
-VLAN 1 Legacy / Recovery remains available as a separate recovery path.
+
+pfSense provides the Layer 3 gateway and routed security boundary for each VLAN.
+
+Traffic between VLANs must traverse pfSense and is evaluated against the firewall policy associated with the interface where that traffic enters the firewall.
+
+Traffic between devices on the same VLAN may remain entirely at Layer 2 and may therefore not traverse pfSense.
+
+Guest wireless clients on VLAN 40 use UniFi Client Device Isolation to reduce direct Layer 2 communication between clients that share the same VLAN.
+```
 
 ## Layer 2 and Layer 3 Responsibilities
 
@@ -216,6 +220,8 @@ The captive portal dependency on the UniFi Cloud Key is an example of a narrowly
 When two devices are on the same VLAN, their traffic may be switched directly at Layer 2 without traversing pfSense.
 
 This means pfSense firewall rules cannot necessarily control communication between devices that share the same VLAN.
+
+Guest wireless uses UniFi Client Device Isolation for Layer 2 guest-to-guest isolation
 
 ## Administrative Access Model
 
