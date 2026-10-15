@@ -74,9 +74,14 @@ This alias is used by rules that block lateral access to protected internal netw
 
 ### MANAGEMENT_BLOCKED_NETWORKS
 
-`MANAGEMENT_BLOCKED_NETWORKS` represents networks that Management clients should not be able to initiate connections toward.
+`MANAGEMENT_BLOCKED_NETWORKS` contains the internal networks that Management clients should not initiate connections toward.
 
-It includes the protected internal segments required by the current Management policy, including Guest where applicable.
+It includes:
+
+- `192.168.1.0/24` - Legacy / Recovery
+- `10.10.20.0/24` - Trusted
+- `10.10.30.0/24` - Servers
+- `10.10.40.0/24` - Guest
 
 ## Interface Policies
 
