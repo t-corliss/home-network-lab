@@ -190,6 +190,44 @@ Application dependencies can require narrowly defined exceptions through otherwi
 
 Firewall logs are especially useful for discovering these hidden dependencies because they show which destination and service are being blocked.
 
+## Incident: Servers Could Initiate Toward Guest
+
+### Symptoms
+
+A repository-wide policy review showed that the intended firewall model required Server-to-Guest traffic to be blocked.
+
+### Evidence
+
+- The Servers interface permitted DNS to pfSense.
+- A broader block prevented Servers from initiating toward the networks contained in `INTERNAL_NETWORKS`.
+- The `INTERNAL_NETWORKS` alias did not include the Guest subnet.
+- A final broad egress rule permitted remaining destinations.
+
+### Root Cause
+
+The Servers rules did not contain an explicit Guest block, and the Guest subnet was not part of the alias used by the broader internal-network block.
+
+As a result, Server-to-Guest traffic could fall through to the final allow rule.
+
+### Resolution
+
+An explicit Servers-to-Guest block rule was added above the broader internal-network block and final egress rule.
+
+The resulting order is:
+
+1. Allow Servers to pfSense DNS.
+2. Block Servers to Guest.
+3. Block Servers to protected internal networks.
+4. Allow remaining Internet egress.
+
+Validation confirmed that Server DNS and Internet access continued to work while Server-to-Guest initiation was blocked.
+
+### Lesson
+
+Broad egress rules should be reviewed against the complete VLAN inventory.
+
+A policy can appear correct while still allowing traffic to a network that was never included in the protected destination set.
+
 ## Diagnostic Techniques
 
 Several troubleshooting methods proved useful across multiple incidents.

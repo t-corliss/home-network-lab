@@ -129,6 +129,7 @@ The Servers VLAN is intended to host server workloads while limiting unnecessary
 Current policy characteristics include:
 
 - Servers may use pfSense for DNS.
+- Server-initiated traffic toward the Guest VLAN is explicitly blocked.
 - Server-initiated traffic toward protected internal networks is blocked unless explicitly required.
 - General Internet egress is allowed after internal destinations have already been handled.
 - Return traffic for established connections is permitted statefully.
