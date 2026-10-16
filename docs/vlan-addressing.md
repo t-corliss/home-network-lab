@@ -85,7 +85,7 @@ The current dynamic address pools are:
 | 30 - Servers | `10.10.30.0/24` | `10.10.30.100` - `10.10.30.199` |
 | 40 - Guest | `10.10.40.0/24` | `10.10.40.100` - `10.10.40.199` |
 
-# Static Mappings and Reservations
+## Static Mappings and Reservations
 
 Some systems use DHCP reservations so that they receive predictable addresses while still obtaining their configuration through DHCP.
 

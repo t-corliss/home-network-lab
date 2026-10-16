@@ -71,7 +71,7 @@ VLANs provide Layer 2 segmentation. pfSense enforces routed Layer 3 policy betwe
 - [Troubleshooting Lessons](docs/troubleshooting.md)
 - [Adding a New VLAN](docs/adding-a-vlan.md)
 
-# Important Recovery Notes
+## Important Recovery Notes
 
 The network includes dedicated recovery paths for management access.
 
