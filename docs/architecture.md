@@ -82,21 +82,12 @@ The primary physical connections are:
 
 A simplified physical topology is shown below:
 
-```text
-Internet
-   |
-Netgate SG-1100
-   |
-   | LAN uplink
-   |
-Netgear JGS516PE
-   |
-   +-- UniFi Cloud Key Plus
-   +-- UniFi AC Mesh AP
-   +-- Windows Server 2022
-   +-- Management / recovery ports
-   +-- Other wired clients
-```
+<p align="center">
+  <img src="../diagrams/physical-topology.svg"
+       alt="Physical topology of the home network lab"
+       width="100%">
+</p>
+
 ### Logical Topology
 
 The network is divided into separate VLANs based on device role and trust level.
