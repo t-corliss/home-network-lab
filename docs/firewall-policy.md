@@ -36,13 +36,13 @@ Important principles include:
 
 ## Effective Trust Matrix
 
-| Source | Management | Trusted | Servers | Guest | Internet |
-|---|---|---|---|---|---|
-| Legacy / Recovery | Broad recovery access | Broad recovery access | Broad recovery access | Broad recovery access | Allowed |
-| Management | Local management access | Blocked | Blocked | Blocked | Allowed as required |
-| Trusted | Admin exceptions only | Local | Admin RDP exception only | Blocked | Allowed |
-| Servers | Blocked | Blocked | Local | Blocked | Allowed |
-| Guest | Captive portal exception only | Blocked | Blocked | Local / client-isolated | Allowed |
+The following matrix summarizes which zones may initiate traffic toward other zones under the current policy.
+
+<p align="center">
+  <img src="../diagrams/security-policy-matrix.svg"
+       alt="Security policy matrix showing permitted and blocked initiation between network security zones"
+       width="100%">
+</p>
 
 ## Aliases
 
