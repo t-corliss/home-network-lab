@@ -32,7 +32,7 @@ Changes that have been documented but not yet grouped into a named release are l
 - Corrected Management DNS service from TCP/UDP port `853` to port `53`.
 - Added the required Guest-to-Cloud-Key TCP `8880` exception for captive portal operation.
 
-## v1.0.0 10-18-26
+## v1.0.0 - 2026-10-18
 
 ### Added
 
