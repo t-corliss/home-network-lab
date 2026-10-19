@@ -22,6 +22,14 @@ The dedicated Management recovery path should normally be preferred over the bro
 
 The Legacy / Recovery path exists as a break-glass option when the more controlled Management path is not sufficient.
 
+The following diagram summarizes the normal administrative path and the two dedicated break-glass recovery paths.
+
+<p align="center">
+  <img src="../diagrams/recovery-access-paths.svg"
+       alt="Normal administration and break-glass recovery access paths"
+       width="100%">
+</p>
+
 ## Before Making Risky Changes
 
 Before changing trunk behavior, VLAN membership, firewall policy, management addressing, or other settings that could interrupt administrative access:

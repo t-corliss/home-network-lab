@@ -76,6 +76,14 @@ The switch uses three important concepts:
 
 A port can carry multiple tagged VLANs, but an access device normally uses one untagged VLAN with a matching PVID.
 
+The following diagram provides a visual summary of VLAN transport, tagging, and access-port behavior.
+
+<p align="center">
+  <img src="../diagrams/vlan-transport.svg"
+       alt="VLAN transport and switch port tagging layout"
+       width="100%">
+</p>
+
 ### Port Role Summary
 
 | Port | Role | VLAN Behavior |
