@@ -31,3 +31,29 @@ Changes that have been documented but not yet grouped into a named release are l
 - Corrected Servers VLAN DNS handling by placing the required DNS exception above the internal-network block.
 - Corrected Management DNS service from TCP/UDP port `853` to port `53`.
 - Added the required Guest-to-Cloud-Key TCP `8880` exception for captive portal operation.
+
+## v1.0.0 10-18-26
+
+### Added
+
+- Added editable draw.io source files and rendered SVG diagrams for physical topology, VLAN transport, security policy, recovery access, and wireless SSID-to-VLAN flow.
+- Embedded network diagrams into the relevant documentation pages and the repository README.
+- Added repository security guidance for sensitive configuration data, backups, credentials, and sanitized examples.
+
+### Changed
+
+- Stabilized Management infrastructure addressing:
+  - Cloud Key Plus: `10.10.10.20`
+  - UniFi AC Mesh AP: `10.10.10.21`
+  - Netgear managed switch: `10.10.10.22`
+- Updated the Guest captive portal rule to reference the `CLOUD_KEY` alias.
+- Clarified the exact contents and purpose of `MANAGEMENT_BLOCKED_NETWORKS`.
+- Updated documentation to match the audited live configuration.
+- Improved topology, recovery, wireless, and policy documentation with embedded diagrams.
+
+### Fixed
+
+- Added explicit Servers-to-Guest isolation because the broader internal-network alias does not include the Guest VLAN.
+- Removed stale Management infrastructure address references.
+- Removed stale VLAN 50 references.
+- Corrected documentation structure, heading consistency, and logical topology presentation.
