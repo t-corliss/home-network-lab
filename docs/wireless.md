@@ -71,6 +71,14 @@ pfSense provides addressing, DNS, routing, and firewall policy for the Guest VLA
 
 The Guest wireless network also uses UniFi-specific controls to reduce direct communication between guest clients.
 
+The following diagram summarizes SSID-to-VLAN mapping, access point management, and the division of responsibilities between UniFi and pfSense.
+
+<p align="center">
+  <img src="../diagrams/wireless-ssid-vlan-flow.svg"
+       alt="Wireless SSID to VLAN mapping and infrastructure roles"
+       width="100%">
+</p>
+
 ## Guest Client Isolation
 
 The Guest wireless network uses UniFi Client Device Isolation to reduce direct communication between wireless clients on VLAN 40.
