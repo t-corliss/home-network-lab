@@ -37,25 +37,11 @@ The current environment includes:
 
 ## High-Level Topology
 
-```text
-Internet
-   |
-pfSense
-   |
-   | VLAN trunk
-   |
-Netgear Managed Switch
-   |
-   +-- Management devices
-   +-- Trusted clients
-   +-- Windows Server
-   +-- Recovery ports
-   |
-   +-- UniFi Access Point
-          |
-          +-- Trusted Wi-Fi
-          +-- Guest Wi-Fi
-```
+<p align="center">
+  <img src="diagrams/physical-topology.svg"
+       alt="Physical topology of the home network lab"
+       width="100%">
+</p>
 
 VLANs provide Layer 2 segmentation. pfSense enforces routed Layer 3 policy between VLANs. Traffic between devices on the same VLAN may remain entirely at Layer 2 and therefore may not traverse the firewall.
 
