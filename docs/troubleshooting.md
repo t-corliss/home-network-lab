@@ -228,6 +228,122 @@ Broad egress rules should be reviewed against the complete VLAN inventory.
 
 A policy can appear correct while still allowing traffic to a network that was never included in the protected destination set.
 
+## Incident: WireGuard Established but RDP Return Traffic Failed
+
+### Symptoms
+
+The approved remote client established a WireGuard tunnel successfully, but RDP to DC01 at `10.10.30.11:3389` timed out.
+
+WireGuard itself appeared healthy:
+
+- The tunnel showed a current handshake.
+- Transfer counters increased.
+- The client had a route for `10.10.30.11/32` through the WireGuard interface.
+
+### Initial Firewall Evidence
+
+The first RDP attempts were blocked by the `WG_REMOTE` default deny rule because the intended allow rule did not match correctly.
+
+The rule was corrected to permit:
+
+```text
+Source:      10.10.50.10
+Destination: 10.10.30.11
+Protocol:    TCP
+Port:        3389
+```
+
+After the change, firewall logs showed the traffic matching the intended `WG_REMOTE` pass rule.
+
+RDP still failed.
+
+### Packet Capture Evidence
+
+A packet capture on the SERVERS interface showed:
+
+```text
+10.10.50.10 -> 10.10.30.11:3389  SYN
+10.10.30.11 -> 10.10.50.10       SYN-ACK
+```
+
+This proved that:
+
+- pfSense forwarded the client SYN to DC01.
+- DC01 was listening on TCP `3389`.
+- DC01 accepted the connection attempt and returned a SYN-ACK.
+
+However, the client never completed the TCP three-way handshake.
+
+Repeated traffic looked like:
+
+```text
+SYN
+SYN-ACK
+SYN retransmit
+SYN-ACK retransmit
+```
+
+A capture on `WG_REMOTE` showed the client SYN packets but did not show the returning SYN-ACK packets.
+
+### Root Cause
+
+The WireGuard tunnel had been assigned as a pfSense interface, but `10.10.50.1/24` was not configured as the static IPv4 address on the assigned `WG_REMOTE` interface.
+
+The assigned interface therefore did not have the intended Layer 3 identity for the WireGuard subnet.
+
+### Resolution
+
+The assigned interface was configured as:
+
+```text
+Interface: WG_REMOTE
+IPv4 Configuration Type: Static IPv4
+Address: 10.10.50.1/24
+Gateway: none
+```
+
+After applying the change:
+
+```powershell
+Test-NetConnection 10.10.30.11 -Port 3389
+```
+
+returned:
+
+```text
+TcpTestSucceeded : True
+```
+
+RDP then succeeded normally.
+
+### Lesson
+
+A successful WireGuard handshake proves that the encrypted tunnel is established, but it does not prove that application traffic can complete a routed round trip.
+
+The useful troubleshooting sequence was:
+
+```text
+Client route
+    ↓
+WireGuard handshake
+    ↓
+WG_REMOTE firewall rule
+    ↓
+SERVERS egress
+    ↓
+DC01 response
+    ↓
+WG_REMOTE return path
+    ↓
+Client
+```
+
+Firewall logs confirmed whether the traffic matched policy.
+
+Packet captures on both the SERVERS and `WG_REMOTE` interfaces identified the exact point where the TCP handshake stopped.
+
+The most important clue was seeing the SYN-ACK leave DC01 but never return through `WG_REMOTE`.
+
 ## Diagnostic Techniques
 
 Several troubleshooting methods proved useful across multiple incidents.

@@ -48,7 +48,7 @@ Before testing security policy, confirm that basic network services are function
 
 ### Recovery Client Addressing
 
-**Test:** Connect an approved administrative laptop to the Management recovery port.
+**Test:** Connect an approved administrative client to the Management recovery port.
 
 **Expected result:** The client receives an address in the `10.10.10.0/24` subnet.
 
@@ -194,13 +194,13 @@ Before testing security policy, confirm that basic network services are function
 
 ### Management Recovery - Port 8
 
-**Test:** Connect an approved administrative laptop to port 8.
+**Test:** Connect an approved administrative client to port 8.
 
 **Expected result:** The client receives Management VLAN addressing and can reach the required administrative interfaces.
 
 ### Legacy / Recovery - Port 9
 
-**Test:** Connect an approved administrative laptop to port 9.
+**Test:** Connect an approved administrative client to port 9.
 
 **Expected result:** The client receives an address in the `192.168.1.0/24` subnet and can reach pfSense through the break-glass path.
 
@@ -215,6 +215,72 @@ Before testing security policy, confirm that basic network services are function
 **Test:** After using a recovery path, restore and verify the normal administrative path before disconnecting from recovery access.
 
 **Expected result:** Normal administration is restored before the temporary recovery session ends.
+
+## WireGuard Remote Access Validation
+
+### External Tunnel Establishment
+
+**Test:** Connect the approved client from a non-home external network and activate the WireGuard tunnel.
+
+**Expected result:** The tunnel establishes successfully and reports a current handshake.
+
+**Result:** PASS
+
+### DC01 Remote Desktop
+
+**Test:** From the external WireGuard client, connect to `10.10.30.11` using TCP port `3389`.
+
+**Expected result:** RDP succeeds.
+
+**Result:** PASS
+
+### pfSense Remote Administration
+
+**Test:** From the external WireGuard client, browse to:
+
+```text
+https://10.10.10.1
+```
+
+**Expected result:** The pfSense web interface is reachable over TCP `443`.
+
+**Result:** PASS
+
+### Cloud Key Remote Administration
+
+**Test:** From the external WireGuard client, browse to:
+
+```text
+https://10.10.10.20
+```
+
+**Expected result:** The UniFi Cloud Key interface is reachable over TCP `443`.
+
+**Result:** PASS
+
+### Split-Tunnel Behavior
+
+**Test:** While WireGuard is active, access an unrelated Internet destination.
+
+**Expected result:** Unrelated Internet traffic continues to use the external network rather than the home VPN.
+
+**Result:** PASS
+
+### Unauthorized VPN Access
+
+**Test:** From the WireGuard client, attempt to initiate traffic to internal destinations that are not explicitly permitted.
+
+**Expected result:** The traffic is blocked.
+
+**Result:** PASS
+
+### WAN Exposure
+
+**Test:** Review WAN firewall and NAT policy.
+
+**Expected result:** UDP `51820` is permitted to the WireGuard service on pfSense, and no direct WAN RDP rule or port forward exists.
+
+**Result:** PASS
 
 ## Post-Change Acceptance Checklist
 

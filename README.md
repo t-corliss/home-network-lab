@@ -4,7 +4,7 @@
 
 This repository documents the design, configuration, validation, recovery procedures, and operational lessons for my segmented home network and personal lab environment.
 
-The network uses VLAN-based Layer 2 segmentation with pfSense providing Layer 3 routing and firewall policy between security zones.
+The network uses VLAN-based Layer 2 segmentation with pfSense providing Layer 3 routing and firewall policy between security zones. A dedicated WireGuard routed security zone provides least-privilege remote administrative access.
 
 ## Design Goals
 
@@ -35,6 +35,14 @@ The current environment includes:
 | 30 | Servers | Server workloads |
 | 40 | Guest | Isolated guest wireless access |
 
+### Non-VLAN Routed Security Zones
+
+| Zone | Network | Purpose |
+|---|---|---|
+| WG_REMOTE | `10.10.50.0/24` | Least-privilege WireGuard remote administration |
+
+`WG_REMOTE` is a routed VPN network, not a VLAN. It does not use 802.1Q tagging or switch VLAN membership.
+
 ## High-Level Topology
 
 <p align="center">
@@ -51,6 +59,7 @@ VLANs provide Layer 2 segmentation. pfSense enforces routed Layer 3 policy betwe
 - [VLAN and Addressing Plan](docs/vlan-addressing.md)
 - [Switching and VLAN Transport](docs/switching.md)
 - [Firewall Policy](docs/firewall-policy.md)
+- [Remote Access VPN](docs/remote-access-vpn.md)
 - [Wireless](docs/wireless.md)
 - [Recovery and Emergency Access](docs/recovery.md)
 - [Network Validation Checklist](docs/validation.md)

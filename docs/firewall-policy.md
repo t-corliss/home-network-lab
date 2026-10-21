@@ -10,7 +10,7 @@ Historical troubleshooting events and temporary rules are documented separately.
 
 ## Policy Model
 
-pfSense acts as the Layer 3 enforcement point for traffic routed between VLANs.
+pfSense acts as the Layer 3 enforcement point for traffic routed between VLANs and for traffic entering through the assigned WireGuard `WG_REMOTE` interface.
 
 Firewall policy follows a least-privilege approach:
 
@@ -19,6 +19,7 @@ Firewall policy follows a least-privilege approach:
 - Place specific exceptions above broader deny rules.
 - Allow general Internet egress only after protected internal destinations have already been handled.
 - Preserve narrowly defined administrative and recovery access paths.
+- WireGuard clients are treated as a separate routed security zone and receive only explicitly permitted access.
 
 ## Rule Evaluation Principles
 
@@ -152,6 +153,26 @@ Current policy characteristics include:
 - Guest clients may access the UniFi Cloud Key on TCP port `8880` to support captive portal functionality.
 - General Internet egress is allowed after internal destinations have already been handled.
 - Wireless guest clients use UniFi client isolation to reduce direct communication between devices on the same VLAN.
+
+### WG_REMOTE Policy
+
+`WG_REMOTE` is the dedicated WireGuard remote-access security zone using `10.10.50.0/24`.
+
+The current approved client uses `10.10.50.10`.
+
+Current policy characteristics include:
+
+- `10.10.50.10` may reach DC01 at `10.10.30.11` using TCP `3389`.
+- `10.10.50.10` may reach pfSense at `10.10.10.1` using TCP `443`.
+- `10.10.50.10` may reach the UniFi Cloud Key at `10.10.10.20` using TCP `443`.
+- Other VPN-initiated internal traffic remains blocked unless explicitly permitted.
+- Return traffic for established connections is permitted statefully.
+
+The WAN interface separately permits UDP `51820` to the pfSense WAN address so that WireGuard can receive tunnel traffic.
+
+This WAN rule terminates on pfSense and is not an RDP port forward.
+
+TCP `3389` is not exposed directly to the Internet.
 
 ## pfSense Service Exposure
 

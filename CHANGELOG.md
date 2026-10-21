@@ -17,6 +17,11 @@ Changes that have been documented but not yet grouped into a named release are l
 - Guest captive portal support through a narrow Cloud Key TCP `8880` exception.
 - Guest client isolation for same-VLAN wireless separation.
 - Network architecture, switching, addressing, firewall, wireless, recovery, validation, troubleshooting, and VLAN deployment documentation.
+- WireGuard remote-access VPN on pfSense using the dedicated `WG_REMOTE` routed security zone (`10.10.50.0/24`).
+- Least-privilege remote administrative access from the approved client to DC01 RDP, pfSense HTTPS, and Cloud Key HTTPS.
+- External-network validation of the complete WireGuard remote-access path.
+- Documentation for WireGuard architecture, firewall policy, validation, recovery, and troubleshooting.
+
 
 ### Changed
 
@@ -24,6 +29,9 @@ Changes that have been documented but not yet grouped into a named release are l
 - Established a dedicated Management recovery path as the preferred administrative fallback.
 - Added explicit Trusted-to-Guest isolation.
 - Standardized documentation and change control through Git and GitHub.
+- Added `WG_REMOTE` to the documented security-zone and firewall-policy model.
+- Reused the `.50` address space as a routed WireGuard network without creating VLAN 50.
+- Updated the security-policy matrix to include `WG_REMOTE` as both a source and destination security zone.
 
 ### Fixed
 
@@ -31,6 +39,8 @@ Changes that have been documented but not yet grouped into a named release are l
 - Corrected Servers VLAN DNS handling by placing the required DNS exception above the internal-network block.
 - Corrected Management DNS service from TCP/UDP port `853` to port `53`.
 - Added the required Guest-to-Cloud-Key TCP `8880` exception for captive portal operation.
+
+- Corrected assigned WireGuard interface addressing so return traffic routes correctly through `WG_REMOTE`.
 
 ## v1.0.0 - 2026-10-18
 

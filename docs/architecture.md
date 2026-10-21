@@ -27,6 +27,8 @@ Its primary responsibilities include:
 - Providing Internet access through the WAN connection.
 - Hosting administrative access to pfSense.
 - Supporting recovery access through dedicated management paths.
+- Terminating the WireGuard remote-access VPN.
+- Enforcing least-privilege policy for the `WG_REMOTE` routed security zone.
 
 ### Netgear JGS516PE Managed Switch
 
@@ -125,7 +127,10 @@ Traffic between VLANs must traverse pfSense and is evaluated against the firewal
 Traffic between devices on the same VLAN may remain entirely at Layer 2 and may therefore not traverse pfSense.
 
 Guest wireless clients on VLAN 40 use UniFi Client Device Isolation to reduce direct Layer 2 communication between clients that share the same VLAN.
-```
+
+The network also includes the routed WireGuard security zone `WG_REMOTE` using `10.10.50.0/24`.
+
+`WG_REMOTE` is not an 802.1Q VLAN and is not transported across the Netgear switch trunk. pfSense terminates the VPN at `10.10.50.1/24`, and the approved remote client peer uses `10.10.50.10/32`.
 
 ## Layer 2 and Layer 3 Responsibilities
 
@@ -156,8 +161,12 @@ These responsibilities include:
 - Applying firewall policy to routed traffic.
 - Providing access to external networks through the WAN connection.
 - Providing DHCP and DNS services for the defined network segments.
+- Terminating and routing the WireGuard remote-access network.
+- Applying firewall policy to traffic entering through `WG_REMOTE`.
 
 Because inter-VLAN traffic must pass through pfSense, firewall policy can enforce security boundaries between the logical network zones.
+
+Traffic entering through WireGuard is also routed and filtered by pfSense. The assigned `WG_REMOTE` interface provides a separate policy boundary for remote VPN clients.
 
 ## Traffic Flow Model
 
@@ -217,6 +226,22 @@ Guest wireless uses UniFi Client Device Isolation for Layer 2 guest-to-guest iso
 ## Administrative Access Model
 
 Administrative access is intentionally limited to known management paths rather than being available equally from every network segment.
+
+### Remote VPN Administrative Client
+
+The approved remote client uses WireGuard to reach selected administrative services from external networks.
+
+The remote client is assigned `10.10.50.10/32` within the `WG_REMOTE` routed security zone.
+
+Current permitted access is limited to:
+
+- RDP to DC01 at `10.10.30.11` using TCP `3389`.
+- pfSense web administration at `10.10.10.1` using TCP `443`.
+- UniFi Cloud Key administration at `10.10.10.20` using TCP `443`.
+
+Other VPN-initiated internal access remains blocked unless a specific exception is added.
+
+The remote client uses split tunneling, so unrelated Internet traffic continues to use the external network rather than the home VPN.
 
 ### Trusted Administrative Clients
 
