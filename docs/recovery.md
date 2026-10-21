@@ -39,6 +39,7 @@ Before changing trunk behavior, VLAN membership, firewall policy, management add
 - Confirm that the relevant management interface is reachable.
 - Save or export a current configuration backup where appropriate.
 - Avoid changing multiple layers at the same time.
+- When changing WireGuard or `WG_REMOTE`, confirm that a local wired administrative path is available before applying changes that could remove remote connectivity.
 - Keep a rollback path available until the replacement configuration has been validated.
 
 ## Management Recovery - Port 8
