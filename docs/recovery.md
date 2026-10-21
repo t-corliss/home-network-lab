@@ -52,7 +52,7 @@ This is the preferred recovery path for restoring administrative access when nor
 
 ### Procedure
 
-1. Connect an approved administrative laptop to switch port 8.
+1. Connect an approved administrative client to switch port 8.
 2. Confirm that the client receives a Management VLAN address in the `10.10.10.0/24` subnet.
 3. If a reservation is configured, verify that the client receives its expected recovery address.
 4. Test access to pfSense at `10.10.10.1`.
@@ -77,7 +77,7 @@ This path is intentionally broader and more permissive than the Management recov
 
 ### Procedure
 
-1. Connect an approved administrative laptop to switch port 9.
+1. Connect an approved administrative client to switch port 9.
 2. Confirm that the client receives an address in the `192.168.1.0/24` subnet.
 3. Verify reachability to pfSense at `192.168.1.1`.
 4. Use the Legacy / Recovery path only for the minimum amount of time required to restore normal management access.
@@ -98,7 +98,7 @@ If the normal pfSense administrative path is unavailable, use the narrowest avai
 
 ### Preferred Method
 
-1. Connect an approved administrative laptop to port 8.
+1. Connect an approved administrative client to port 8.
 2. Confirm Management VLAN addressing.
 3. Attempt to reach pfSense at `10.10.10.1`.
 4. If access succeeds, correct the affected firewall, VLAN, or interface configuration.
@@ -108,7 +108,7 @@ If the normal pfSense administrative path is unavailable, use the narrowest avai
 
 If Management recovery is not sufficient:
 
-1. Connect an approved administrative laptop to port 9.
+1. Connect an approved administrative client to port 9.
 2. Confirm Legacy / Recovery addressing.
 3. Attempt to reach pfSense at `192.168.1.1`.
 4. Correct only the configuration required to restore a more controlled management path.
@@ -122,7 +122,7 @@ The Netgear switch is most reliably managed from a host directly connected to th
 
 ### Procedure
 
-1. Connect an approved administrative laptop to port 8.
+1. Connect an approved administrative client to port 8.
 2. Confirm that the client receives an address in the `10.10.10.0/24` Management subnet.
 3. Attempt to reach the switch management interface.
 4. If the switch is unreachable but the client has correct Management addressing:

@@ -48,7 +48,7 @@ Before testing security policy, confirm that basic network services are function
 
 ### Recovery Client Addressing
 
-**Test:** Connect an approved administrative laptop to the Management recovery port.
+**Test:** Connect an approved administrative client to the Management recovery port.
 
 **Expected result:** The client receives an address in the `10.10.10.0/24` subnet.
 
@@ -194,13 +194,13 @@ Before testing security policy, confirm that basic network services are function
 
 ### Management Recovery - Port 8
 
-**Test:** Connect an approved administrative laptop to port 8.
+**Test:** Connect an approved administrative client to port 8.
 
 **Expected result:** The client receives Management VLAN addressing and can reach the required administrative interfaces.
 
 ### Legacy / Recovery - Port 9
 
-**Test:** Connect an approved administrative laptop to port 9.
+**Test:** Connect an approved administrative client to port 9.
 
 **Expected result:** The client receives an address in the `192.168.1.0/24` subnet and can reach pfSense through the break-glass path.
 
